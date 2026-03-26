@@ -2,6 +2,7 @@
 #include "Food.hpp"
 #include "Electronics.hpp"
 
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -37,6 +38,12 @@ class Shelf
         }
 
         return nullptr;
+    }
+
+    void showShelf(){
+        for (Product* p : shelf) {
+            std::cout << p->toString() << std::endl;
+        }
     }
 
     void clear(){

@@ -18,6 +18,7 @@ class Product
     std::string getProductId();
     double getPrice();
     double getTax();
+    double getTotal();
 
     virtual std::string toString();
 };

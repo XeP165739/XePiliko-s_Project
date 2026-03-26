@@ -25,6 +25,10 @@ double Product::getTax(){
     return tax;
 }
 
+double Product::getTotal(){
+    return price * (1 + tax);
+}
+
 std::string Product::toString(){
     return name + " | " + productId + " | " + std::to_string(price) + " | " + std::to_string(tax);
 }
