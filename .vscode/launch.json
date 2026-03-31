@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/patlo/Coding_Files/XePiliko-s_Project/C++/OOP",
-      "program": "c:/Users/patlo/Coding_Files/XePiliko-s_Project/C++/OOP/build/Debug/outDebug",
+      "cwd": "c:/Users/patlo/Coding_Files/XePiliko-s_Project/C++/Pointers",
+      "program": "c:/Users/patlo/Coding_Files/XePiliko-s_Project/C++/Pointers/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
