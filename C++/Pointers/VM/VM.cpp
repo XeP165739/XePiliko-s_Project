@@ -513,10 +513,18 @@ void testDiv(){
     IoOut('a');
 }
 
+void Environment(){
+    /*
+    
+    */
+}
+
 int main(){
     // testAddSub();
     // testMult();
     // testDiv();
+
+    // Environment();
 
     Interpret();
 
