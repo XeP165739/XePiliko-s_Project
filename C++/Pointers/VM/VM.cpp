@@ -181,6 +181,17 @@ int16_t division(int16_t a, int16_t b, int16_t c){
     return c;
 }
 
+uint16_t posneg(int16_t* a, int16_t* b){
+    uint16_t sign = 0x0000;
+
+    if(((*a ^ *b) & 0x8000) == 0x8000) sign = 0x8000;
+
+    if ((*a & 0x8000) == 0x8000) *a = ~(*a) + 1;
+    if ((*b & 0x8000) == 0x8000) *b = ~(*b) + 1;
+
+    return sign;
+}
+
 void Interpret(){
     if(vm == nullptr) throw std::runtime_error("VM Memory Clear");
 
@@ -312,10 +323,15 @@ void Interpret(){
                 temp_stack_pt -= sizeof(int16_t); 
                 std::memcpy(&a, temp_stack_pt, sizeof(int16_t));
 
+                std::cout << "Mult : " << std::to_string(a) << " * " << std::to_string(b) << " = ";
+
+                uint16_t sign = posneg(&a, &b);
                 int16_t result = multiply(a, b);
+                if(sign == 0x8000) result = ~result + 1;
+
                 std::memcpy(temp_stack_pt, &result, sizeof(int16_t));
 
-                std::cout << "Mult : " << std::to_string(a) << " * " << std::to_string(b) << " = " << std::to_string(result) << std::endl;
+                std::cout << std::to_string(result) << std::endl;
 
                 temp_stack_pt += sizeof(int16_t); // will point to the next;
                 
@@ -338,10 +354,15 @@ void Interpret(){
                 temp_stack_pt -= sizeof(int16_t); 
                 std::memcpy(&a, temp_stack_pt, sizeof(int16_t));
 
+                std::cout << "Div : " << std::to_string(a) << " / " << std::to_string(b) << " = ";
+
+                uint16_t sign = posneg(&a, &b);
                 int16_t result = division(a, b, 0);
+                if(sign == 0x8000) result = ~result + 1;
+
                 std::memcpy(temp_stack_pt, &result, sizeof(int16_t));
 
-                std::cout << "Div : " << std::to_string(a) << " / " << std::to_string(b) << " = " << std::to_string(result) << std::endl;
+                std::cout << std::to_string(result) << std::endl;
 
                 temp_stack_pt += sizeof(int16_t); // will point to the next;
                 
@@ -483,7 +504,7 @@ void testMult(){
     Save('a', 10);
 
     Load('a');
-    Push(6);
+    Push(-6);
 
     Mult();
 
@@ -501,7 +522,7 @@ void testDiv(){
     printf(a)
     */
 
-    Save('a', 66);
+    Save('a', -66);
 
     Load('a');
     Push(6);
@@ -519,9 +540,24 @@ void Environment(){
     */
 }
 
+void Integer(){
+    uint8_t* byt = new uint8_t[4]();
+
+    int16_t a = -10;
+    int16_t posA = ~(a) + 1;
+
+    std::memcpy(&byt[0], &a, sizeof(int16_t));
+    std::memcpy(&byt[2], &posA, sizeof(int16_t));
+
+    for(int i = 0; i < 4; i++){
+        printf("%02x ", byt[i]);
+    }
+}
+
 int main(){
+    // Integer();
     // testAddSub();
-    // testMult();
+    testMult();
     // testDiv();
 
     // Environment();
